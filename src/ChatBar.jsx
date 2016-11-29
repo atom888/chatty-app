@@ -8,6 +8,7 @@ class ChatBar extends Component {
                 id="username"
                 type="text"
                 placeholder="Your Name (Optional)"
+                value={this.props.currentUser.name}
               />
               <input
                 id="new-message"
