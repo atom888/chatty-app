@@ -20,8 +20,24 @@ import MessageList from './MessageList.jsx';
           content: "No, I think you lost them. You lost your marbles Bob. You lost them for good."
         }
       ],
-    }
+      value: ''
+    };
+
+    this.createNewMessage = this.createNewMessage.bind(this);
   }
+
+
+  createNewMessage(event) {
+    const newMessage = {
+      id: this.state.messages.length + 1,
+      username: event.username,
+      content: event.content
+    }
+    const message = this.state.messages.concat(newMessage)
+    this.setState({messages: message})
+
+  }
+
 
   render() {
     console.log("Rendering")
@@ -30,8 +46,12 @@ import MessageList from './MessageList.jsx';
         <nav>
           <h1>Chatty</h1>
         </nav>
-        <MessageList messages={this.state.messages}/>
-        <ChatBar currentUser={this.state.currentUser}/>
+        <MessageList
+        messages={this.state.messages}
+        />
+        <ChatBar
+        addMessage={this.createNewMessage}
+        />
       </div>
     );
   }
