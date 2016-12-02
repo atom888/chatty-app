@@ -10,7 +10,8 @@ import MessageList from './MessageList.jsx';
       id: '',
       currentUser : {name: "Bob"},
       messages: [],
-      value: ''
+      value: '',
+      userCounter: ''
     };
 
     this.createNewMessage = this.createNewMessage.bind(this);
@@ -36,7 +37,7 @@ import MessageList from './MessageList.jsx';
     this.socket = maSocket;
     this.socket.onopen = (event) => {
         this.socket.onmessage = (event) => {
-          console.log("event", event)
+
          const receivedData = JSON.parse(event.data);
          console.log("receivedData", receivedData)
          console.log("RD type", receivedData.type)
@@ -46,6 +47,11 @@ import MessageList from './MessageList.jsx';
                const updatedMessage = receivedData;
                const newMessages = this.state.messages.concat(updatedMessage);
                this.setState({messages: newMessages})
+              break;
+              case "clientCounter":
+                const clientCount = receivedData.content
+                this.setState({userCounter: clientCount})
+
               break;
             default:
               throw new Error("Unknown event type " + receivedData);
@@ -60,6 +66,7 @@ import MessageList from './MessageList.jsx';
       <div>
         <nav>
           <h1>Chatty</h1>
+          <h3>{this.state.userCounter} users online</h3>
         </nav>
         <MessageList
         messages={this.state.messages}
