@@ -7,6 +7,7 @@ import MessageList from './MessageList.jsx';
   constructor(props) {
     super(props);
     this.state = {
+      id: '',
       currentUser : {name: "Bob"},
       messages: [],
       value: ''
@@ -15,21 +16,18 @@ import MessageList from './MessageList.jsx';
     this.createNewMessage = this.createNewMessage.bind(this);
   }
 
-
   createNewMessage(event) {
+    console.log('gonna send new msg', event);
     const newMessage = {
-      id: this.state.messages.length + 1,
+      // id: this.state.messages.length + 1,
       username: event.username,
-      content: event.content
+      content: event.content,
+      type: event.type
     }
-    const message = this.state.messages.concat(newMessage)
-    // this.setState({messages: message})
-
+    this.setState({currentUser: {name: newMessage.username}})
+    // const message = this.state.messages.concat(newMessage)
     this.socket.send(JSON.stringify(newMessage));
-
   }
-
-
 
 
   componentDidMount() {
@@ -38,15 +36,23 @@ import MessageList from './MessageList.jsx';
     this.socket = maSocket;
     this.socket.onopen = (event) => {
         this.socket.onmessage = (event) => {
-        console.log("Test", JSON.parse(event.data));
-        let updatedMessage = JSON.parse(event.data);
-        const newMessages = this.state.messages.concat(updatedMessage)
-        this.setState({messages: newMessages})
-      } // fat arrow acts as a regular function but with .bind this after
-    }
-
+          console.log("event", event)
+         const receivedData = JSON.parse(event.data);
+         console.log("receivedData", receivedData)
+         console.log("RD type", receivedData.type)
+          switch(receivedData.type) {
+            case "incomingMessage":
+            case "incomingNotification":
+               const updatedMessage = receivedData;
+               const newMessages = this.state.messages.concat(updatedMessage);
+               this.setState({messages: newMessages})
+              break;
+            default:
+              throw new Error("Unknown event type " + receivedData);
+          }
+        };
+    } // fat arrow acts as a regular function but with .bind this after
   }
-
 
   render() {
     console.log("Rendering")
@@ -59,6 +65,7 @@ import MessageList from './MessageList.jsx';
         messages={this.state.messages}
         />
         <ChatBar
+        username={this.state.currentUser.name}
         addMessage={this.createNewMessage}
         />
       </div>

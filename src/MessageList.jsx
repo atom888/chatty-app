@@ -6,10 +6,10 @@ class MessageList extends Component {
     return (
       <div id="message-list">
       {this.props.messages.map(function(msg) {
-        return <Message key={msg.id} username={msg.username} content={msg.content} />
+        return <Message key={msg.id} type={msg.type} username={msg.username} content={msg.content} />
       })}
         <div className="message system">
-          Anonymous1 changed their name to nomnom.
+          This is not a private chat.
         </div>
       </div>
     );
