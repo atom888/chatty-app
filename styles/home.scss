@@ -1,5 +1,11 @@
 h1 {
   color: black;
+  display: inline-block;
+}
+
+h3 {
+  display: inline-block;
+  float: right;
 }
 
 html, body {
@@ -58,6 +64,8 @@ footer {
   border-top: 1px solid black;
   background-color: tomato;
   display: flex; align-items: center;
+  position: fixed;
+  width: 100%;
 }
 
 footer input {

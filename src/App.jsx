@@ -13,23 +13,18 @@ import MessageList from './MessageList.jsx';
       value: '',
       userCounter: ''
     };
-
     this.createNewMessage = this.createNewMessage.bind(this);
   }
 
   createNewMessage(event) {
-    console.log('gonna send new msg', event);
     const newMessage = {
-      // id: this.state.messages.length + 1,
       username: event.username,
       content: event.content,
       type: event.type
     }
     this.setState({currentUser: {name: newMessage.username}})
-    // const message = this.state.messages.concat(newMessage)
     this.socket.send(JSON.stringify(newMessage));
   }
-
 
   componentDidMount() {
 
@@ -37,21 +32,17 @@ import MessageList from './MessageList.jsx';
     this.socket = maSocket;
     this.socket.onopen = (event) => {
         this.socket.onmessage = (event) => {
-
          const receivedData = JSON.parse(event.data);
-         console.log("receivedData", receivedData)
-         console.log("RD type", receivedData.type)
           switch(receivedData.type) {
             case "incomingMessage":
             case "incomingNotification":
-               const updatedMessage = receivedData;
-               const newMessages = this.state.messages.concat(updatedMessage);
-               this.setState({messages: newMessages})
+              const updatedMessage = receivedData;
+              const newMessages = this.state.messages.concat(updatedMessage);
+              this.setState({messages: newMessages});
               break;
-              case "clientCounter":
-                const clientCount = receivedData.content
-                this.setState({userCounter: clientCount})
-
+            case "clientCounter":
+              const clientCount = receivedData.content
+              this.setState({userCounter: clientCount});
               break;
             default:
               throw new Error("Unknown event type " + receivedData);

@@ -6,8 +6,6 @@ class ChatBar extends Component {
     this.state = {
       userBox: this.props.username,
       messageBox: ""
-      // id: ""
-      // type: ""
     };
 
     this.handleChangeUsername = this.handleChangeUsername.bind(this);
@@ -31,8 +29,8 @@ class ChatBar extends Component {
         username: this.state.userBox,
         type: "postMessage"
       }
-      this.props.addMessage(message)
-      this.setState({messageBox: ''})
+      this.props.addMessage(message);
+      this.setState({messageBox: ''});
     }
   }
 
@@ -42,8 +40,7 @@ class ChatBar extends Component {
         username: this.state.userBox,
         type: "postNotification"
       }
-      this.props.addMessage(message)
-      // this.setState({userBox: this.state.userBox})
+      this.props.addMessage(message);
   }
 
   render() {
