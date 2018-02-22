@@ -42,3 +42,9 @@ npm run lint
 * Webpack
 * [babel-loader](https://github.com/babel/babel-loader)
 * [webpack-dev-server](https://github.com/webpack/webpack-dev-server)
+
+
+# Final 
+
+![screen shot 2018-02-21 at 8 46 49 pm](https://user-images.githubusercontent.com/11824162/36520871-7b9dbf56-1748-11e8-8b7c-374cce3ff7d1.png)
+
