@@ -10,8 +10,8 @@ import MessageList from './MessageList.jsx';
       id: '',
       currentUser : {name: "Bob"},
       messages: [],
-      value: '',
-      userCounter: ''
+      value: '', // what is this for?
+      userCounter: '' // I like that you listed all the possible state values here. Suggestion: make the empty default undefined instead of ''
     };
     this.createNewMessage = this.createNewMessage.bind(this);
   }
@@ -22,7 +22,7 @@ import MessageList from './MessageList.jsx';
       content: event.content,
       type: event.type
     }
-    this.setState({currentUser: {name: newMessage.username}})
+    this.setState({currentUser: {name: newMessage.username}}) // why is it necessary to update this.state.currentUser every time a new message is sent?
     this.socket.send(JSON.stringify(newMessage));
   }
 
@@ -33,7 +33,7 @@ import MessageList from './MessageList.jsx';
     this.socket.onopen = (event) => {
         this.socket.onmessage = (event) => {
          const receivedData = JSON.parse(event.data);
-          switch(receivedData.type) {
+          switch(receivedData.type) { // nice use of switch statement here
             case "incomingMessage":
             case "incomingNotification":
               const updatedMessage = receivedData;
@@ -65,6 +65,7 @@ import MessageList from './MessageList.jsx';
         <ChatBar
         username={this.state.currentUser.name}
         addMessage={this.createNewMessage}
+        // suggestion: You could split up addMessage into two separate functions: addMessage and renameUser.
         />
       </div>
     );

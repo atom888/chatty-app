@@ -34,11 +34,13 @@ class ChatBar extends Component {
     }
   }
 
+  // nice touch to make this be called on blur and on keyup
   handleSubmitUsername(event) {
       let message = {
         content: this.props.username + " has changed to " + this.state.userBox,
         username: this.state.userBox,
-        type: "postNotification"
+        type: "postNotification"  // the message type is something that the socket cares about. you could have a cleaner separation of concerns by letting the App component
+                                  // build the message. The content could even be set by the server.
       }
       this.props.addMessage(message);
   }
@@ -52,6 +54,7 @@ class ChatBar extends Component {
                   value={this.state.userBox}
                   onKeyPress={
                     (evt) => {
+                      // +1 for how you are reusing the handleSubmitUsername in two places
                       if (evt.which ===13) {
                       this.handleSubmitUsername
                       }

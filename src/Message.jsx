@@ -3,6 +3,8 @@ import React, {Component} from 'react';
 
 class Message extends Component {
   render() {
+    // In the assignment specs user name change notifications show up differently from
+    // user name change messages.
     return (
       <div>
         <div className="message">
